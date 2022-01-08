@@ -1,0 +1,73 @@
+const menu = {
+  _course: {
+    appetizers: [],
+    mains: [],
+    desserts: [],
+  },
+  get appetizers(){
+    return this._course.appetizers; 
+  },
+
+  set appetizers(appetizers){
+    this._course.appetizers = appetizers;
+  },
+  get mains(){
+    return this._course.mains;
+  },
+  set mains(mains){
+    this._course.mains = mains;
+  },
+  get desserts(){
+    return this._course.desserts;
+  },
+  set desserts(desserts){
+    this._course.deserts = desserts;
+  },
+
+  get course(){
+    return {
+    appetizers: this._course.appetizers,
+    mains: this._course.mains,
+    desserts: this._course.desserts,
+    };
+  },
+
+  addDishToCourse(courseName, dishName, dishPrice){
+    const dish = {
+      name: dishName,
+      price: dishPrice,
+    };
+    return this._course[courseName].push(dish);
+  },
+
+  getRandomDishFromCourse(courseName){
+    const dishes = this._course[courseName];
+    const randomIndex = Math.floor(Math.random()*dishes.length);
+    return dishes[randomIndex];
+   },
+
+  generateRandomMeals(){
+    const appetizer = this.getRandomDishFromCourse('appetizers');  // in video solution there is no ' ' around appetizers
+    const main = this.getRandomDishFromCourse('mains');
+    const dessert = this.getRandomDishFromCourse('desserts');
+    const totalPrice = appetizer.price + main.price + dessert.price;
+    return `meal is ${appetizer.name} , ${main.name}, ${dessert.name}
+    total price is ${totalPrice}`;
+  },
+};
+
+menu.addDishToCourse('appetizers','Asalad',4.5);
+menu.addDishToCourse('appetizers','Awings',3.5);
+menu.addDishToCourse('appetizers','Afries',2.5);
+
+menu.addDishToCourse('mains','MBeef',5.5);
+menu.addDishToCourse('mains','MTofus',5.5);
+menu.addDishToCourse('mains','MFish',5.5); // because of a typo in mains where i typed manis, so push does not work properly
+
+menu.addDishToCourse('desserts','Ddrink',5.5);
+menu.addDishToCourse('desserts','Dcoffee',5.5);
+menu.addDishToCourse('desserts','Dcake',5.5);
+
+
+let meal = menu.generateRandomMeals();
+console.log(meal)
